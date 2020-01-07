@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'input_page.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
@@ -14,27 +15,11 @@ class BMICalculator extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: Colors.white,
+      ),
       home: InputPage(),
     );
   }
 }
 
-class InputPage extends StatefulWidget{
-  @override 
-  _InputPageState createState() => _InputPageState();
-}
-
-class _InputPageState extends State<InputPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Text('Body Text'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-      ),
-    );
-  }
-}
