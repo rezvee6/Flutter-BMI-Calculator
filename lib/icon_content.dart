@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'constants.dart';
 
-const primaryTextColor = Color(0xFF40bfc1);
-const secondaryTextColor = Color(0xFF40bfc1);
 class IconContent extends StatelessWidget {
   
   IconContent({this.icon, this.iconText, this.textColour});
@@ -24,11 +23,12 @@ class IconContent extends StatelessWidget {
           height: 15.0,
         ),
         Text(
-          iconText, style: TextStyle(
-            fontSize: 18.0,
-            color: textColour,
-          ),
-        )
+          iconText, 
+            style:TextStyle(
+              fontSize: 18.0,
+              color: textColour,
+            ),
+        ),
       ],
     );
   }
