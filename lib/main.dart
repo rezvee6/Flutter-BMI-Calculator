@@ -5,7 +5,7 @@ import 'input_page.dart';
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
   statusBarIconBrightness: Brightness.dark,
-  statusBarColor: Colors.deepPurple[900], 
+  statusBarColor: backgroundColour, 
 ));
   runApp(BMICalculator());
 }
@@ -16,7 +16,7 @@ class BMICalculator extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.deepPurple[900],
+        primaryColor: backgroundColour,
       ),
       home: InputPage(),
     );
