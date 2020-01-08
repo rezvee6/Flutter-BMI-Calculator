@@ -3,9 +3,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:bmi_calculator/icon_content.dart';
 import 'package:bmi_calculator/reusable_card.dart';
 
-const activeCardColour = Color(0xFF673ab7);
-const inactiveCardColour = Color(0xFF512da8); 
-const backgroundColour = Color(0xFF311b92);
+const primaryTextColor = Color(0xFFff6f5e);
+const secondaryTextColor = Colors.white;
+const activeCardColour = Color(0xFFff6f5e); 
+const inactiveCardColour =  Colors.white;
+const backgroundColour = Color(0xFFf5f0e3);
 
 enum Gender {
   male,
@@ -22,6 +24,8 @@ class _InputPageState extends State<InputPage> {
   Color maleCardColour = inactiveCardColour;
   Color femaleCardColour = inactiveCardColour;
 
+  Color maleText = primaryTextColor;
+  Color femaleText = primaryTextColor;
   // 1 = male
   // 2 = female
   void updateColour(Gender gender){
@@ -29,9 +33,8 @@ class _InputPageState extends State<InputPage> {
       if (maleCardColour == inactiveCardColour){
         maleCardColour = activeCardColour;
         femaleCardColour = inactiveCardColour;
-      } else {
-        maleCardColour = inactiveCardColour;
-        femaleCardColour = activeCardColour;
+        maleText = inactiveCardColour;
+        femaleText = activeCardColour;
       }
     }
 
@@ -39,9 +42,8 @@ class _InputPageState extends State<InputPage> {
       if (femaleCardColour == inactiveCardColour){
         femaleCardColour = activeCardColour;
         maleCardColour = inactiveCardColour;
-      } else {
-        femaleCardColour = inactiveCardColour;
-        maleCardColour = activeCardColour;
+        femaleText = inactiveCardColour;
+        maleText = activeCardColour;
       }
     }
   }
@@ -58,7 +60,7 @@ class _InputPageState extends State<InputPage> {
           'BMI Calculator',
           style: TextStyle(
             fontSize: 25.0,
-            color: Colors.red[300],
+            color: primaryTextColor,
             fontFamily: 'Pacifico',
           ),
         ),
@@ -72,7 +74,7 @@ class _InputPageState extends State<InputPage> {
                   child: GestureDetector(
                       onTap: (){
                         setState(() {
-                          updateColour(1);
+                          updateColour(Gender.male);
                         });
                       },
                       child: ReusableCard(
@@ -80,6 +82,7 @@ class _InputPageState extends State<InputPage> {
                       cardChild: IconContent(
                         icon: FontAwesomeIcons.mars,
                         iconText: 'Male',
+                        textColour: maleText,
                       ),
                     ),
                   ),
@@ -88,7 +91,7 @@ class _InputPageState extends State<InputPage> {
                   child: GestureDetector(
                     onTap: (){
                        setState(() {
-                          updateColour(2);
+                          updateColour(Gender.female);
                         });
                     },
                     child: ReusableCard(
@@ -96,6 +99,7 @@ class _InputPageState extends State<InputPage> {
                     cardChild: IconContent(
                       icon: FontAwesomeIcons.venus,
                       iconText: 'Female',
+                      textColour: femaleText,
                     ),
                     ),
                   ),
