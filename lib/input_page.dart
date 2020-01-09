@@ -4,6 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:bmi_calculator/icon_content.dart';
 import 'package:bmi_calculator/reusable_card.dart';
 import 'constants.dart';
+import 'results_page.dart';
+import 'calculatorBrain.dart';
 
 enum Gender {
   male,
@@ -18,8 +20,8 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   Gender selectedGender;
   int height = 180;
-  int weight = 56;
-  int age = 21;
+  int weight = 65;
+  int age = 25;
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +59,7 @@ class _InputPageState extends State<InputPage> {
                     cardChild: IconContent(
                       icon: FontAwesomeIcons.mars,
                       iconText: 'Male',
-                      textColour: selectedGender == Gender.male
-                          ? inactiveCardColour
-                          : activeCardColour,
+                      textColour: secondaryTextColor,
                     ),
                   ),
                 ),
@@ -76,9 +76,7 @@ class _InputPageState extends State<InputPage> {
                     cardChild: IconContent(
                       icon: FontAwesomeIcons.venus,
                       iconText: 'Female',
-                      textColour: selectedGender == Gender.female
-                          ? inactiveCardColour
-                          : activeCardColour,
+                      textColour: secondaryTextColor,
                     ),
                   ),
                 ),
@@ -91,7 +89,9 @@ class _InputPageState extends State<InputPage> {
               cardChild: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(height: 5.0,),
+                  SizedBox(
+                    height: 5.0,
+                  ),
                   Text(
                     'Height',
                     style: klabelTextStyle,
@@ -113,7 +113,7 @@ class _InputPageState extends State<InputPage> {
                   ),
                   SliderTheme(
                     data: SliderTheme.of(context).copyWith(
-                      activeTrackColor: backgroundColour,
+                      activeTrackColor: thirdColour,
                       inactiveTrackColor: Colors.white,
                       thumbColor: thirdColour,
                       thumbShape:
@@ -159,23 +159,23 @@ class _InputPageState extends State<InputPage> {
                           children: <Widget>[
                             RoundIconButton(
                               icon: FontAwesomeIcons.plus,
-                              onPressed: (){
+                              onPressed: () {
                                 setState(() {
-                                  weight ++;
+                                  weight++;
                                 });
                               },
-                              ),
+                            ),
                             SizedBox(
                               width: 20.0,
                             ),
                             RoundIconButton(
                               icon: FontAwesomeIcons.minus,
-                              onPressed: (){
+                              onPressed: () {
                                 setState(() {
-                                  weight --;
+                                  weight--;
                                 });
                               },
-                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -202,23 +202,23 @@ class _InputPageState extends State<InputPage> {
                           children: <Widget>[
                             RoundIconButton(
                               icon: FontAwesomeIcons.plus,
-                              onPressed: (){
+                              onPressed: () {
                                 setState(() {
                                   age++;
                                 });
                               },
-                              ),
+                            ),
                             SizedBox(
                               width: 20.0,
                             ),
                             RoundIconButton(
                               icon: FontAwesomeIcons.minus,
-                              onPressed: (){
+                              onPressed: () {
                                 setState(() {
                                   age--;
                                 });
                               },
-                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -228,21 +228,38 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          Container(
-            
-            margin: EdgeInsets.all(10.0),
-            height: kBottomContainerHeight,
-            child: Text(
-              'Calculate BMI',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: secondaryTextColor,
-                fontSize: 25.0,
+          GestureDetector(
+            onTap: () {
+              CalculatorBrain calc =
+                  CalculatorBrain(height: height, weight: weight);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ResultsPage(
+                    bmiResult: calc.calculateBMI(),
+                    resultText: calc.getResult(),
+                    interpretation: calc.getInterpretation(),
+                  ),
+                ),
+              );
+            },
+            child: Container(
+              margin: EdgeInsets.all(10.0),
+              height: kBottomContainerHeight,
+              child: Center(
+                child: Text(
+                  'CALCULATE',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: secondaryTextColor,
+                    fontSize: 25.0,
+                  ),
+                ),
               ),
-            ),
-            decoration: BoxDecoration(
-              color: primaryTextColor,
-              borderRadius: BorderRadius.circular(15.0),
+              decoration: BoxDecoration(
+                color: thirdColour,
+                borderRadius: BorderRadius.circular(15.0),
+              ),
             ),
           ),
         ],
@@ -251,25 +268,25 @@ class _InputPageState extends State<InputPage> {
   }
 }
 
-
 class RoundIconButton extends StatelessWidget {
-
   RoundIconButton({@required this.icon, @required this.onPressed});
   final IconData icon;
   final Function onPressed;
-  @override 
-  Widget build(BuildContext context){
+  @override
+  Widget build(BuildContext context) {
     return RawMaterialButton(
       shape: CircleBorder(),
-      fillColor: Colors.white,
+      fillColor: buttonColour,
       constraints: BoxConstraints.tightFor(
         width: 50.0,
         height: 50.0,
       ),
-      elevation: 6.0,
+      elevation: 1.0,
       onPressed: onPressed,
-      child: Icon(icon,
-      color: primaryTextColor,),
+      child: Icon(
+        icon,
+        color: primaryTextColor,
+      ),
     );
   }
 }
